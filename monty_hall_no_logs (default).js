@@ -2,7 +2,7 @@
 const Sleep = require('./modules/sleep');
 
 //│, ─, ├─, └─;
-const attempts = 1500; //Number of games to run. Adjust to your liking.
+const attempts = 300; //Number of games to run. Adjust to your liking.
 const delay = 0; //Adds a bit of delay between certain actions to improve performance. It will increase the duration. Adjust to your liking.
 (async () => {
     console.log(`Starting the simulation with ${attempts} rounds in 2 seconds without logging...`);
