@@ -16,7 +16,7 @@ To start either programs, type `node <fileName.js>`.
 
 ## Simulation settings
 
-In both file, you will see the following code:
+In both files, you will see the following code:
 
 ```js
 // Settings
@@ -30,9 +30,9 @@ The comments are self-explanatory.
 
 ## Code explained
 
-Here's a line by line explanation of the code in `montyHall.js`:
+Here's a line-by-line explanation of the code in `montyHall.js`:
 
-Line 13: Save the timestamp at the start of execution
+Line 13: Save the timestamp at the start of the execution.
 
 ```js
 const start_time = performance.now();
@@ -56,7 +56,7 @@ let userDoor = Math.floor(Math.random() * 3 + 1);
 
 <br>
 
-Line 28: Generate the host's choice. Here, we cannot use a random number because the door cannot be equal to the treasure door nor the user's choice. Therefore, we create an array containing the doors' number. Then, we return the element that is not equal to the treasure door and not equal to the user door.
+Line 28: Generate the host's choice. Here, we cannot use a random number because the door cannot be equal to the treasure door or the user's choice. Therefore, we create an array containing the doors' numbers. Then, we return the element that is not equal to the treasure door and not equal to the user door.
 
 ```js
 let hostDoor = [1, 2, 3].find((door) => {
@@ -112,4 +112,4 @@ const end_time = performance.now();
 
 <br>
 
-Finally, we log the results on the last few lines.
+Finally, we log the results in the last few lines.
