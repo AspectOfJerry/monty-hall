@@ -1,61 +1,36 @@
 // Settings
-const attempts = 100000; // Number of games to run.
+const attempts = 10000; // Number of games to run.
 const do_switch = true; // Whether to switch doors or not.
 
+console.log(`Starting the simulation with ${attempts} games.`);
 
-console.log(`Starting the simulation with ${attempts} games in 2 seconds (switch?: ${do_switch}). ETA: ${attempts * 0.1} ms`);
-
-// Wait 2 seconds
-(async () => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-})();
-
-const start_time = performance.now();
-
-// Declaring variables
 let wins = 0;
 let fails = 0;
 
-// Main
-for(let i = 0; i < attempts; i++) {
-    // Generate the treasure door
-    let treasureDoor = Math.floor(Math.random() * 3 + 1);
+const start_time = performance.now();
 
-    // Generate the user's choice
-    let userDoor = Math.floor(Math.random() * 3 + 1);
+for (let i = 0; i < attempts; i++) {
+    // Generate the treasure door and the user's choice
+    const treasureDoor = Math.floor(Math.random() * 3);
+    const userDoor = Math.floor(Math.random() * 3);
 
-    // Generate the host's choice
-    let hostDoor = [1, 2, 3].find((door) => {
-        return door !== treasureDoor && door !== userDoor;
-    });
+    // Determine the host's choice
+    const hostDoor = [0, 1, 2].find(door => door !== treasureDoor && door !== userDoor);
 
-    // Generate the new user door, if applicable.
-    let newUserDoor;
-    switch(do_switch) {
-        case true:
-            // Switch the user's door
-            newUserDoor = [1, 2, 3].find((door) => {
-                return door !== hostDoor && door !== userDoor;
-            });
-            break;
-        default:
-            // No changes
-            newUserDoor = userDoor;
-            break;
-    }
+    // Determine the new user door if switching
+    const newUserDoor = do_switch ? [0, 1, 2].find(door => door !== hostDoor && door !== userDoor) : userDoor;
 
-    // Game end
-    if(newUserDoor === treasureDoor) {
-        ++wins;
-        console.log(`------------------------------\nTreasure door: ${treasureDoor}\nUser door: ${userDoor}\nGame ${i + 1} result: win`);
-    } else {
-        ++fails;
-        console.log(`------------------------------\nTreasure door: ${treasureDoor}\nUser door: ${userDoor}\nGame ${i + 1} result: lose`);
-    }
+    // Check if the user wins
+    const win = newUserDoor === treasureDoor;
+    wins += win ? 1 : 0;
+    fails += win ? 0 : 1;
+
+    // Logging each game result
+    console.log(`------------------------------\nTreasure door: ${treasureDoor + 1}\nUser door: ${userDoor + 1}\nGame ${i + 1} result: ${win ? "win" : "lose"}`);
 }
 
 // Verdict
 const end_time = performance.now();
-console.log(`========================================================\nSimulation results:\nAttempts: ${wins + fails}\nWins: ${wins}\nFails: ${fails}\nExperimental win probability: ${wins}/${wins + fails} (${(wins / (wins + fails)) * 100}%)\n`);
 
+console.log(`========================================================\nSimulation results:\nAttempts: ${wins + fails}\nWins: ${wins}\nFails: ${fails}\nExperimental win probability: ${wins}/${wins + fails} (${(wins / (wins + fails)) * 100}%)`);
 console.log(`========================================================\nElapsed time: ${end_time - start_time} ms`);
